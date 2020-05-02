@@ -51,14 +51,14 @@ namespace Budget_Lab
             else if (diffMonth == 2)
             {
                 var s = (startMonthDays - start.Day + 1) * startOneDay;
-                var e = end.Day * startOneDay;
+                var e = end.Day * endOneDay;
                 return s + e;
             }
             //// 跨3個月以上
             else
             {
                 var s = (startMonthDays - start.Day + 1) * startOneDay;
-                var e = end.Day * startOneDay;
+                var e = end.Day * endOneDay;
                 var tmpMid = (decimal) 0;
                 for (var i = 1; i < diffMonth-2; i++)
                 {
