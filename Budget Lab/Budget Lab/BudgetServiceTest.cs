@@ -85,7 +85,7 @@ namespace Budget_Lab
                                 new DateTime(2020, 5, 2));
         }
 
-        private void QueryAmountShouldBe(int expected, DateTime start, DateTime end)
+        private void QueryAmountShouldBe(decimal expected, DateTime start, DateTime end)
         {
             Assert.Equal(expected, _budgetService.Query(start, end));
         }
