@@ -2,12 +2,12 @@
 
 namespace Budget_Lab
 {
-    interface IBudgetRepo
+    public interface IBudgetRepo
     {
         List<Budget> GetAll();
     }
 
-    internal class Budget
+    public class Budget
     {
         public string YearMonth { get; set; }
         public int Amount { get; set; }
