@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Budget_Lab
 {
-    public class Program
+    public class ProgramTest
     {
-        static void Main(string[] args)
-        {
-        }
 
     }
 }
