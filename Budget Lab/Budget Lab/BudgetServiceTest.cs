@@ -17,7 +17,7 @@ namespace Budget_Lab
         }
 
         [Fact]
-        public void 當天()
+        public void 一天()
         {
             var budgetService = new BudgetService(this._budgetRepo);
             var start = new DateTime(2020, 4, 01);
