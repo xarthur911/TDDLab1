@@ -9,6 +9,10 @@ namespace Budget_Lab
 {
     public class BudgetServiceTest
     {
+        [Fact]
+        public void noBudget()
+        {
 
+        }
     }
 }
