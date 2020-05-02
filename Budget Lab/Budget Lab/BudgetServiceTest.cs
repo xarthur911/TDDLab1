@@ -26,8 +26,53 @@ namespace Budget_Lab
         {
             GivenBudgets(new Budget {YearMonth = "202004", Amount = 30000});
             QueryAmountShouldBe(0,
-             new DateTime(2020, 4, 01),
-              new DateTime(2020, 3, 01));
+                                new DateTime(2020, 4, 01),
+                                new DateTime(2020, 3, 01));
+        }
+
+        [Fact]
+        public void 當天()
+        {
+            GivenBudgets(new Budget {YearMonth = "202004", Amount = 30000});
+            QueryAmountShouldBe(1000,
+                                new DateTime(2020, 4, 01),
+                                new DateTime(2020, 4, 01));
+        }
+
+        [Fact]
+        public void 當月N天()
+        {
+            GivenBudgets(new Budget {YearMonth = "202004", Amount = 30000});
+            QueryAmountShouldBe(10000,
+                                new DateTime(2020, 4, 01),
+                                new DateTime(2020, 4, 10));
+        }
+
+        [Fact]
+        public void 跨三月()
+        {
+            GivenBudgets(
+                new Budget {YearMonth = "202004", Amount = 30000},
+                new Budget {YearMonth = "202005", Amount = 3100},
+                new Budget {YearMonth = "202006", Amount = 300}
+            );
+
+            QueryAmountShouldBe(6120,
+                                new DateTime(2020, 4, 28),
+                                new DateTime(2020, 6, 2));
+        }
+
+        [Fact]
+        public void 跨兩月()
+        {
+            GivenBudgets(
+                new Budget {YearMonth = "202004", Amount = 30000},
+                new Budget {YearMonth = "202005", Amount = 3100}
+            );
+            QueryAmountShouldBe(3200,
+                                new DateTime(2020, 4, 28),
+                                new DateTime(2020, 5, 2));
+
         }
 
         private void QueryAmountShouldBe(int expected, DateTime start, DateTime end)
@@ -38,61 +83,6 @@ namespace Budget_Lab
         private void GivenBudgets(params Budget[] budgets)
         {
             _budgetRepo.GetAll().Returns(budgets.ToList());
-        }
-
-        [Fact]
-        public void 當天()
-        {
-            var start = new DateTime(2020, 4, 01);
-            var end = new DateTime(2020, 4, 01);
-            _budgetRepo.GetAll().Returns(new List<Budget>
-                                         {
-                                             new Budget {YearMonth = "202004", Amount = 30000}
-                                         });
-            var r = _budgetService.Query(start, end);
-            Assert.Equal(1000, r);
-        }
-
-        [Fact]
-        public void 當月N天()
-        {
-            var start = new DateTime(2020, 4, 01);
-            var end = new DateTime(2020, 4, 10);
-            _budgetRepo.GetAll().Returns(new List<Budget>
-                                         {
-                                             new Budget {YearMonth = "202004", Amount = 30000}
-                                         });
-            var r = _budgetService.Query(start, end);
-            Assert.Equal(10000, r);
-        }
-
-        [Fact]
-        public void 跨三月()
-        {
-            var start = new DateTime(2020, 4, 28);
-            var end = new DateTime(2020, 6, 2);
-            _budgetRepo.GetAll().Returns(new List<Budget>
-                                         {
-                                             new Budget {YearMonth = "202004", Amount = 30000},
-                                             new Budget {YearMonth = "202005", Amount = 3100},
-                                             new Budget {YearMonth = "202006", Amount = 300}
-                                         });
-            var r = _budgetService.Query(start, end);
-            Assert.Equal(6120, r);
-        }
-
-        [Fact]
-        public void 跨兩月()
-        {
-            var start = new DateTime(2020, 4, 28);
-            var end = new DateTime(2020, 5, 2);
-            _budgetRepo.GetAll().Returns(new List<Budget>
-                                         {
-                                             new Budget {YearMonth = "202004", Amount = 30000},
-                                             new Budget {YearMonth = "202005", Amount = 3100}
-                                         });
-            var r = _budgetService.Query(start, end);
-            Assert.Equal(3200, r);
         }
     }
 }
