@@ -47,20 +47,12 @@ namespace Budget_Lab
                 //// 當月超過1日
                 return (decimal)(diffDays) * startOneDay;
             }
-            //// 跨2月
-            else if (diffMonth == 2)
-            {
-                var s = (startMonthDays - start.Day + 1) * startOneDay;
-                var e = end.Day * endOneDay;
-                return s + e;
-            }
-            //// 跨3個月以上
             else
             {
                 var s = (startMonthDays - start.Day + 1) * startOneDay;
                 var e = end.Day * endOneDay;
                 var tmpMid = (decimal) 0;
-                for (var i = 1; i < diffMonth-2; i++)
+                for (var i = 1; i < diffMonth-1; i++)
                 {
                     var midAmount = allAmount
                         .FirstOrDefault(j => j.YearMonth == start.AddMonths(i).ToString("yyyyMM"))
