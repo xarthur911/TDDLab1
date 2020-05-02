@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NSubstitute;
 using Xunit;
 
@@ -23,14 +24,20 @@ namespace Budget_Lab
         [Fact]
         public void end小於start()
         {
-            var start = new DateTime(2020, 4, 01);
-            var end = new DateTime(2020, 3, 01);
-            _budgetRepo.GetAll().Returns(new List<Budget>
-                                         {
-                                             new Budget {YearMonth = "202004", Amount = 30000}
-                                         });
-            var r = _budgetService.Query(start, end);
-            Assert.Equal(0, r);
+            GivenBudgets(new Budget {YearMonth = "202004", Amount = 30000});
+            QueryAmountShouldBe(0,
+             new DateTime(2020, 4, 01),
+              new DateTime(2020, 3, 01));
+        }
+
+        private void QueryAmountShouldBe(int expected, DateTime start, DateTime end)
+        {
+            Assert.Equal(expected, _budgetService.Query(start, end));
+        }
+
+        private void GivenBudgets(params Budget[] budgets)
+        {
+            _budgetRepo.GetAll().Returns(budgets.ToList());
         }
 
         [Fact]
