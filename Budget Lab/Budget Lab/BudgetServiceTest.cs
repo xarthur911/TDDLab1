@@ -72,7 +72,17 @@ namespace Budget_Lab
             QueryAmountShouldBe(3200,
                                 new DateTime(2020, 4, 28),
                                 new DateTime(2020, 5, 2));
+        }
 
+        [Fact]
+        public void invalid_period()
+        {
+            GivenBudgets(
+                new Budget {YearMonth = "202004", Amount = 30000}
+            );
+            QueryAmountShouldBe(0,
+                                new DateTime(2020, 5, 28),
+                                new DateTime(2020, 5, 2));
         }
 
         private void QueryAmountShouldBe(int expected, DateTime start, DateTime end)
