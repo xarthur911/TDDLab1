@@ -49,8 +49,8 @@ namespace Budget_Lab
             }
             else
             {
-                var s = (startMonthDays - start.Day + 1) * startOneDay;
-                var e = end.Day * endOneDay;
+                var startMonthAmount = (startMonthDays - start.Day + 1) * startOneDay;
+                var endMonthAmount = end.Day * endOneDay;
                 var tmpMid = (decimal) 0;
                 for (var i = 1; i < diffMonth-1; i++)
                 {
@@ -60,7 +60,7 @@ namespace Budget_Lab
                     tmpMid += midAmount;
                 }
 
-                return s + tmpMid + e;
+                return startMonthAmount + tmpMid + endMonthAmount;
             }
 
             return 0;
