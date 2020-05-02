@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Budget_Lab
 {
-    public class ProgramTest
+    public class BudgetServiceTest
     {
 
     }

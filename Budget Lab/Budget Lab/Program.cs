@@ -10,7 +10,7 @@ namespace Budget_Lab
     {
         static void Main(string[] args)
         {
+            var budgetService = new BudgetService();
         }
-
     }
 }
