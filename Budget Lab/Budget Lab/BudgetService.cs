@@ -37,7 +37,9 @@ namespace Budget_Lab
             decimal overlappingAmountOfStartBudget = 0m;
             if (firstBudget != null)
             {
-                var overlappingDays = (firstBudget.Days() - start.Day + 1);
+                var overlappingEnd = new DateTime(firstBudget.FirstDay().Year, firstBudget.FirstDay().Month, firstBudget.Days());
+                var overlappingStart = start;
+                var overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
                 overlappingAmountOfStartBudget = overlappingDays * firstBudget.DailyAmount();
             }
 
@@ -59,6 +61,7 @@ namespace Budget_Lab
                 int midAmount = 0;
                 if (middleBudget != null)
                 {
+                    // midAmount = middleBudget.Amount;
                     midAmount = middleBudget.Amount;
                 }
 
