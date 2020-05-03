@@ -33,7 +33,7 @@ namespace Budget_Lab
                 return 0;
             }
 
-            var tmpMid = (decimal) 0;
+            var result = (decimal) 0;
             var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
             for (var i = 0; i < diffMonth; i++)
             {
@@ -44,14 +44,13 @@ namespace Budget_Lab
                 if (currentBudget != null)
                 {
                     var period = new Period(start, end);
-                    var overlappingDays = period.OverlappingDays( currentBudget.CreatePeriod());
-                    midAmount = overlappingDays * currentBudget.DailyAmount();
+                    midAmount = currentBudget.OverlappingAmount(period);
                 }
 
-                tmpMid += midAmount;
+                result += midAmount;
             }
 
-            return tmpMid;
+            return result;
         }
 
         private Budget GetBudget(DateTime queryDate)
