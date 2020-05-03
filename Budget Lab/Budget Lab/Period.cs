@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace Budget_Lab
 {
@@ -10,16 +14,16 @@ namespace Budget_Lab
             End = end;
         }
 
-        public DateTime Start { get; private set; }
-        public DateTime End   { get; private set; }
+        private DateTime Start { get; }
+        private DateTime End   { get; }
 
         public int OverlappingDays(Period anotherPeriod)
         {
-            DateTime overlappingEnd = anotherPeriod.End < End
+            var overlappingEnd = anotherPeriod.End < End
                 ? anotherPeriod.End
                 : End;
 
-            DateTime overlappingStart = anotherPeriod.Start > Start
+            var overlappingStart = anotherPeriod.Start > Start
                 ? anotherPeriod.Start
                 : Start;
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #endregion
 
@@ -21,13 +22,9 @@ namespace Budget_Lab
             if (end < start) return 0;
 
             var period = new Period(start, end);
-            var result = (decimal) 0;
-            foreach (var currentBudget in _budgetRepo.GetAll())
-            {
-                result += currentBudget.OverlappingAmount(period);
-            }
 
-            return result;
+            return _budgetRepo.GetAll()
+                              .Sum(budget => budget.OverlappingAmount(period));
         }
     }
 }
