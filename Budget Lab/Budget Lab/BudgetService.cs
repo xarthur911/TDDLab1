@@ -47,7 +47,9 @@ namespace Budget_Lab
             decimal overlappingAmountOfEndBudget = 0m;
             if (endBudget != null)
             {
-                var overlappingDays = end.Day;
+                var overlappingEnd = end;
+                var overlappingStart = endBudget.FirstDay();
+                var overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
                 overlappingAmountOfEndBudget = overlappingDays * endBudget.DailyAmount();
             }
 
