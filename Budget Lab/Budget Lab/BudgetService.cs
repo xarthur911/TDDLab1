@@ -33,21 +33,11 @@ namespace Budget_Lab
                 return 0;
             }
 
+            var period = new Period(start, end);
             var result = (decimal) 0;
-            var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
-            for (var i = 0; i < diffMonth; i++)
+            foreach (var currentBudget in _budgetRepo.GetAll())
             {
-                var currentMonth = start.AddMonths(i);
-                var currentBudget = GetBudget(currentMonth);
-
-                var midAmount = 0m;
-                if (currentBudget != null)
-                {
-                    var period = new Period(start, end);
-                    midAmount = currentBudget.OverlappingAmount(period);
-                }
-
-                result += midAmount;
+                result += currentBudget.OverlappingAmount(period);
             }
 
             return result;
