@@ -27,5 +27,10 @@ namespace Budget_Lab
         {
             return (decimal) Amount / Days();
         }
+
+        public DateTime LastDay()
+        {
+            return new DateTime(FirstDay().Year, FirstDay().Month, Days());
+        }
     }
 }
