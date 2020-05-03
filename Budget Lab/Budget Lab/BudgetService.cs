@@ -31,12 +31,14 @@ namespace Budget_Lab
                 dailyAmountOfStart = firstBudget.DailyAmount();
             }
 
-            var daysOfEndBudget = DateTime.DaysInMonth(end.Year, end.Month);
             var endBudget = GetBudget(end);
-            
-            var amountOfEndBudget = endBudget
-                ?.Amount ?? 0;
-            var dailyAmountOfEnd = (decimal) amountOfEndBudget / daysOfEndBudget;
+
+            decimal dailyAmountOfEnd = 0m;
+            if (endBudget != null)
+            {
+                dailyAmountOfEnd = endBudget.DailyAmount();
+            }
+
 
             if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
             {
