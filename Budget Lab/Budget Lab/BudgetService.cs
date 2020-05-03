@@ -53,9 +53,15 @@ namespace Budget_Lab
             var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
             for (var i = 1; i < diffMonth - 1; i++)
             {
-                var midAmount = _budgetRepo.GetAll()
-                                           .FirstOrDefault(j => j.YearMonth == start.AddMonths(i).ToString("yyyyMM"))
-                                           ?.Amount ?? 0;
+                var currentMonth = start.AddMonths(i);
+                var middleBudget = GetBudget(currentMonth);
+
+                int midAmount = 0;
+                if (middleBudget != null)
+                {
+                    midAmount = middleBudget.Amount;
+                }
+
                 tmpMid += midAmount;
             }
 
