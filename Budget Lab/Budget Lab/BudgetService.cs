@@ -33,16 +33,6 @@ namespace Budget_Lab
                 return 0;
             }
 
-            // var endBudget = GetBudget(end);
-            // decimal overlappingAmountOfEndBudget = 0m;
-            // if (endBudget != null)
-            // {
-            //     var overlappingEnd = end;
-            //     var overlappingStart = endBudget.FirstDay();
-            //     var overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
-            //     overlappingAmountOfEndBudget = overlappingDays * endBudget.DailyAmount();
-            // }
-
             var tmpMid = (decimal) 0;
             var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
             for (var i = 0; i < diffMonth; i++)
@@ -53,32 +43,7 @@ namespace Budget_Lab
                 var midAmount = 0m;
                 if (currentBudget != null)
                 {
-                    DateTime overlappingEnd;
-                    DateTime overlappingStart;
-                    int overlappingDays;
-                    if (currentBudget.YearMonth == start.ToString("yyyyMM"))
-                    {
-                        overlappingEnd = currentBudget.LastDay();
-                        overlappingStart = start;
-                        // overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
-                        // midAmount = overlappingDays * currentBudget.DailyAmount();
-                    }
-                    else if (currentBudget.YearMonth == end.ToString("yyyyMM"))
-                    {
-                        overlappingEnd = end;
-                        overlappingStart = currentBudget.FirstDay();
-                        // overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
-                        // midAmount = overlappingDays * currentBudget.DailyAmount();
-                    }
-                    else
-                    {
-                        overlappingEnd = currentBudget.LastDay();
-                        overlappingStart = currentBudget.FirstDay();
-                        // overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
-                        // midAmount = overlappingDays * currentBudget.DailyAmount();
-                    }
-
-                    overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
+                    var overlappingDays = OverlappingDays(start, end, currentBudget);
                     midAmount = overlappingDays * currentBudget.DailyAmount();
                 }
 
@@ -86,8 +51,30 @@ namespace Budget_Lab
             }
 
             return tmpMid;
-            // return tmpMid + overlappingAmountOfEndBudget;
-            // return overlappingAmountOfStartBudget + tmpMid + overlappingAmountOfEndBudget;
+        }
+
+        private static int OverlappingDays(DateTime start, DateTime end, Budget currentBudget)
+        {
+            DateTime overlappingEnd;
+            DateTime overlappingStart;
+            if (currentBudget.YearMonth == start.ToString("yyyyMM"))
+            {
+                overlappingEnd = currentBudget.LastDay();
+                overlappingStart = start;
+            }
+            else if (currentBudget.YearMonth == end.ToString("yyyyMM"))
+            {
+                overlappingEnd = end;
+                overlappingStart = currentBudget.FirstDay();
+            }
+            else
+            {
+                overlappingEnd = currentBudget.LastDay();
+                overlappingStart = currentBudget.FirstDay();
+            }
+
+            var overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
+            return overlappingDays;
         }
 
         private Budget GetBudget(DateTime queryDate)
