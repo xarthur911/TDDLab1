@@ -22,5 +22,10 @@ namespace Budget_Lab
         {
             return DateTime.DaysInMonth(FirstDay().Year, FirstDay().Month);
         }
+
+        public decimal DailyAmount()
+        {
+            return (decimal) Amount / Days();
+        }
     }
 }

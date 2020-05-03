@@ -31,8 +31,7 @@ namespace Budget_Lab
             if (firstBudget != null)
             {
                 daysOfStartBudget = firstBudget.Days();
-                amountOfStartBudget = firstBudget.Amount;
-                dailyAmountOfStart = (decimal) amountOfStartBudget / daysOfStartBudget;
+                dailyAmountOfStart = firstBudget.DailyAmount();
             }
 
             var daysOfEndBudget = DateTime.DaysInMonth(end.Year, end.Month);
