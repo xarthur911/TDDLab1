@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 #endregion
@@ -20,10 +21,7 @@ namespace Budget_Lab
         {
             if (end < start) return 0;
 
-            var budgets = _budgetRepo.GetAll();
-
-            var firstBudget = budgets
-                .FirstOrDefault(i => i.YearMonth == start.ToString("yyyyMM"));
+            var firstBudget = GetBudget(start);
 
             var dailyAmountOfStart = 0m;
             var daysOfStartBudget = 0;
@@ -34,9 +32,10 @@ namespace Budget_Lab
             }
 
             var daysOfEndBudget = DateTime.DaysInMonth(end.Year, end.Month);
-            var amountOfEndBudget = budgets
-                                    .FirstOrDefault(i => i.YearMonth == end.ToString("yyyyMM"))
-                                    ?.Amount ?? 0;
+            var endBudget = GetBudget(end);
+            
+            var amountOfEndBudget = endBudget
+                ?.Amount ?? 0;
             var dailyAmountOfEnd = (decimal) amountOfEndBudget / daysOfEndBudget;
 
             if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
@@ -51,13 +50,18 @@ namespace Budget_Lab
             var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
             for (var i = 1; i < diffMonth - 1; i++)
             {
-                var midAmount = budgets
-                                .FirstOrDefault(j => j.YearMonth == start.AddMonths(i).ToString("yyyyMM"))
-                                ?.Amount ?? 0;
+                var midAmount = _budgetRepo.GetAll()
+                                           .FirstOrDefault(j => j.YearMonth == start.AddMonths(i).ToString("yyyyMM"))
+                                           ?.Amount ?? 0;
                 tmpMid += midAmount;
             }
 
             return s + tmpMid + e;
+        }
+
+        private Budget GetBudget(DateTime queryDate)
+        {
+            return _budgetRepo.GetAll().FirstOrDefault(i => i.YearMonth == queryDate.ToString("yyyyMM"));
         }
     }
 }
