@@ -44,7 +44,7 @@ namespace Budget_Lab
                 if (currentBudget != null)
                 {
                     var period = new Period(start, end);
-                    var overlappingDays = period.OverlappingDays(currentBudget);
+                    var overlappingDays = period.OverlappingDays( new Period(currentBudget.FirstDay(), currentBudget.LastDay()));
                     midAmount = overlappingDays * currentBudget.DailyAmount();
                 }
 
