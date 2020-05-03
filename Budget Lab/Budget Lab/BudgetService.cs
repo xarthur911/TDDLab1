@@ -15,27 +15,26 @@ namespace Budget_Lab
 
         public decimal Query(DateTime start, DateTime end)
         {
-            var budgets = _budgetRepo.GetAll();
-
-            var daysOfStartBudget = DateTime.DaysInMonth(start.Year, start.Month);
-            var amountOfStartBudget = budgets
-                              .FirstOrDefault(i => i.YearMonth == start.ToString("yyyyMM"))
-                              ?.Amount ?? 0;
-            decimal dailyAmountOfStart = (decimal)amountOfStartBudget / daysOfStartBudget;
-            
-            var daysOfEndBudget = DateTime.DaysInMonth(end.Year, end.Month);
-            var amountOfEndBudget = budgets
-                            .FirstOrDefault(i => i.YearMonth == end.ToString("yyyyMM"))
-                            ?.Amount ?? 0;
-            decimal dailyAmountOfEnd = (decimal)amountOfEndBudget / daysOfEndBudget;
-
-            var intervalDays = end.Subtract(start).TotalDays + 1;
-            if (intervalDays < 1)
-                //// end < start
+            if (end < start)
             {
                 return 0;
             }
 
+            var budgets = _budgetRepo.GetAll();
+
+            var daysOfStartBudget = DateTime.DaysInMonth(start.Year, start.Month);
+            var amountOfStartBudget = budgets
+                                      .FirstOrDefault(i => i.YearMonth == start.ToString("yyyyMM"))
+                                      ?.Amount ?? 0;
+            decimal dailyAmountOfStart = (decimal) amountOfStartBudget / daysOfStartBudget;
+
+            var daysOfEndBudget = DateTime.DaysInMonth(end.Year, end.Month);
+            var amountOfEndBudget = budgets
+                                    .FirstOrDefault(i => i.YearMonth == end.ToString("yyyyMM"))
+                                    ?.Amount ?? 0;
+            decimal dailyAmountOfEnd = (decimal) amountOfEndBudget / daysOfEndBudget;
+
+            var intervalDays = (end - start).Days + 1;
             //// 當天
             if (intervalDays == 1)
             {
