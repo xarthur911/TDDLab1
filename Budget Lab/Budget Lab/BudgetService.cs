@@ -30,7 +30,7 @@ namespace Budget_Lab
             int daysOfStartBudget = 0;
             if (firstBudget != null)
             {
-                daysOfStartBudget = DaysOfBudget(firstBudget);
+                daysOfStartBudget = firstBudget.Days();
                 amountOfStartBudget = firstBudget.Amount;
                 dailyAmountOfStart = (decimal) amountOfStartBudget / daysOfStartBudget;
             }
@@ -64,14 +64,6 @@ namespace Budget_Lab
             }
 
             return 0;
-        }
-
-        private static int DaysOfBudget(Budget firstBudget)
-        {
-            var firstDayOfStartBudget = firstBudget.FirstDay();
-
-            var days = DateTime.DaysInMonth(firstDayOfStartBudget.Year, firstDayOfStartBudget.Month);
-            return days;
         }
     }
 }
