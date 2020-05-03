@@ -21,7 +21,6 @@ namespace Budget_Lab
         {
             if (end < start) return 0;
 
-
             var endBudget = GetBudget(end);
             var dailyAmountOfEnd = 0m;
             if (endBudget != null)
@@ -42,14 +41,13 @@ namespace Budget_Lab
             }
 
             var firstBudget = GetBudget(start);
-            var dailyAmountOfStart = 0m;
-            var daysOfStartBudget = 0;
+            decimal overlappingAmountOfStartBudget = 0m;
             if (firstBudget != null)
             {
-                daysOfStartBudget = firstBudget.Days();
-                dailyAmountOfStart = firstBudget.DailyAmount();
+                var overlappingDays = (firstBudget.Days() - start.Day + 1);
+                overlappingAmountOfStartBudget = overlappingDays * firstBudget.DailyAmount();
             }
-            var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
+
             // var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
             var e = end.Day * dailyAmountOfEnd;
             var tmpMid = (decimal) 0;
@@ -62,7 +60,7 @@ namespace Budget_Lab
                 tmpMid += midAmount;
             }
 
-            return s + tmpMid + e;
+            return overlappingAmountOfStartBudget + tmpMid + e;
         }
 
         private Budget GetBudget(DateTime queryDate)
