@@ -35,11 +35,6 @@ namespace Budget_Lab
             decimal dailyAmountOfEnd = (decimal) amountOfEndBudget / daysOfEndBudget;
 
             var intervalDays = (end - start).Days + 1;
-            //// 當天
-            if (intervalDays == 1)
-            {
-                return dailyAmountOfStart;
-            }
 
             if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
             {
