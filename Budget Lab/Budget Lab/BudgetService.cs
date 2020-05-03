@@ -21,14 +21,6 @@ namespace Budget_Lab
         {
             if (end < start) return 0;
 
-            var firstBudget = GetBudget(start);
-            var dailyAmountOfStart = 0m;
-            var daysOfStartBudget = 0;
-            if (firstBudget != null)
-            {
-                daysOfStartBudget = firstBudget.Days();
-                dailyAmountOfStart = firstBudget.DailyAmount();
-            }
 
             var endBudget = GetBudget(end);
             var dailyAmountOfEnd = 0m;
@@ -49,6 +41,14 @@ namespace Budget_Lab
                 return 0;
             }
 
+            var firstBudget = GetBudget(start);
+            var dailyAmountOfStart = 0m;
+            var daysOfStartBudget = 0;
+            if (firstBudget != null)
+            {
+                daysOfStartBudget = firstBudget.Days();
+                dailyAmountOfStart = firstBudget.DailyAmount();
+            }
             var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
             // var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
             var e = end.Day * dailyAmountOfEnd;
