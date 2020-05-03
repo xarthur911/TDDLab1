@@ -41,8 +41,7 @@ namespace Budget_Lab
                 return dailyAmountOfStart;
             }
 
-            var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
-            if (diffMonth < 2)
+            if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
             {
                 //// 當月超過1日
                 return (decimal) (intervalDays) * dailyAmountOfStart;
@@ -52,6 +51,7 @@ namespace Budget_Lab
                 var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
                 var e = end.Day * dailyAmountOfEnd;
                 var tmpMid = (decimal) 0;
+                var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
                 for (var i = 1; i < diffMonth - 1; i++)
                 {
                     var midAmount = budgets
