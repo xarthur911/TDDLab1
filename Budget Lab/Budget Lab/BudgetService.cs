@@ -60,11 +60,13 @@ namespace Budget_Lab
                 var currentMonth = start.AddMonths(i);
                 var middleBudget = GetBudget(currentMonth);
 
-                int midAmount = 0;
+                var midAmount = 0m;
                 if (middleBudget != null)
                 {
-                    // midAmount = middleBudget.Amount;
-                    midAmount = middleBudget.Amount;
+                    var overlappingEnd = middleBudget.LastDay();
+                    var overlappingStart = middleBudget.FirstDay();
+                    var overlappingDays = (overlappingEnd - overlappingStart).Days + 1;
+                    midAmount = overlappingDays * middleBudget.DailyAmount();
                 }
 
                 tmpMid += midAmount;
