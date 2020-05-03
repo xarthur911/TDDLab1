@@ -22,11 +22,18 @@ namespace Budget_Lab
 
             var budgets = _budgetRepo.GetAll();
 
-            var daysOfStartBudget = DateTime.DaysInMonth(start.Year, start.Month);
-            var amountOfStartBudget = budgets
-                                      .FirstOrDefault(i => i.YearMonth == start.ToString("yyyyMM"))
-                                      ?.Amount ?? 0;
-            decimal dailyAmountOfStart = (decimal) amountOfStartBudget / daysOfStartBudget;
+            var firstBudget = budgets
+                .FirstOrDefault(i => i.YearMonth == start.ToString("yyyyMM"));
+
+            int amountOfStartBudget = 0;
+            decimal dailyAmountOfStart = 0m;
+            int daysOfStartBudget = 0;
+            if (firstBudget != null)
+            {
+                daysOfStartBudget = DateTime.DaysInMonth(start.Year, start.Month);
+                amountOfStartBudget = firstBudget.Amount;
+                dailyAmountOfStart = (decimal) amountOfStartBudget / daysOfStartBudget;
+            }
 
             var daysOfEndBudget = DateTime.DaysInMonth(end.Year, end.Month);
             var amountOfEndBudget = budgets
