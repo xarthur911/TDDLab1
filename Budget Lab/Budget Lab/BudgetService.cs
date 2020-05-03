@@ -22,7 +22,6 @@ namespace Budget_Lab
             if (end < start) return 0;
 
             var firstBudget = GetBudget(start);
-
             var dailyAmountOfStart = 0m;
             var daysOfStartBudget = 0;
             if (firstBudget != null)
@@ -32,21 +31,26 @@ namespace Budget_Lab
             }
 
             var endBudget = GetBudget(end);
-
-            decimal dailyAmountOfEnd = 0m;
+            var dailyAmountOfEnd = 0m;
             if (endBudget != null)
             {
                 dailyAmountOfEnd = endBudget.DailyAmount();
             }
 
-
             if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
             {
                 var intervalDays = (end - start).Days + 1;
-                return intervalDays * dailyAmountOfStart;
+                var budget = GetBudget(start);
+                if (budget != null)
+                {
+                    return intervalDays * budget.DailyAmount();
+                }
+
+                return 0;
             }
 
             var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
+            // var s = (daysOfStartBudget - start.Day + 1) * dailyAmountOfStart;
             var e = end.Day * dailyAmountOfEnd;
             var tmpMid = (decimal) 0;
             var diffMonth = end.Year * 12 + end.Month - (start.Year * 12 + start.Month) + 1;
